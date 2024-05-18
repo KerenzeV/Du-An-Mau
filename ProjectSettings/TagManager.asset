@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2205763761
+    locked: 0
+  - name: Ground
+    uniqueID: 3404966603
+    locked: 0
+  - name: Ladders
+    uniqueID: 313411675
+    locked: 0
+  - name: Traps
+    uniqueID: 3378411423
+    locked: 0
+  - name: Water
+    uniqueID: 3734251373
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
