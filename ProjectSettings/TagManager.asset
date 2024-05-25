@@ -11,10 +11,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - backround Tilemap
+  - Platform Tilemap
+  - caibay
+  - Player
   - 
   - 
   - 
@@ -40,4 +40,16 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 'Backround '
+    uniqueID: 2151974243
+    locked: 0
+  - name: Player
+    uniqueID: 484835585
+    locked: 0
+  - name: Platform
+    uniqueID: 3372206549
+    locked: 0
+  - name: caibay
+    uniqueID: 3720411811
     locked: 0
