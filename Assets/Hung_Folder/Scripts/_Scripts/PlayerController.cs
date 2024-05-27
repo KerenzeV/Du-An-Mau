@@ -72,11 +72,11 @@ namespace HungController
                 _timeJumpWasPressed = _time;
             }
 
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
             {
                 isFacingRight = false;
             }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
+            else if (Input.GetKeyDown(KeyCode.RightArrow ) || Input.GetKeyDown(KeyCode.D))
             {
                 isFacingRight = true;
             }
@@ -211,16 +211,17 @@ namespace HungController
 
         private void HandleDirection()
         {
+            Vector2 direction = isFacingRight ? Vector2.right : Vector2.left;
             if (_frameInput.Move.x == 0)
             {
                 var deceleration = _grounded ? _stats.GroundDeceleration : _stats.AirDeceleration;
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, 0, deceleration * Time.fixedDeltaTime);
-                isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.right, wallCheckDistance, whatIsWall);
+                isWallDetected = Physics2D.Raycast(wallCheck.position, direction, wallCheckDistance, whatIsWall);
             }
             else
             {
                 _frameVelocity.x = Mathf.MoveTowards(_frameVelocity.x, _frameInput.Move.x * _stats.MaxSpeed, _stats.Acceleration * Time.fixedDeltaTime);
-                isWallDetected = Physics2D.Raycast(wallCheck.position, Vector2.left, wallCheckDistance, whatIsWall);
+                isWallDetected = Physics2D.Raycast(wallCheck.position, direction, wallCheckDistance, whatIsWall);
             }
         }
 
