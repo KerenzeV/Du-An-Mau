@@ -56,7 +56,7 @@ public class Knight : MonoBehaviour
             FlipDirection();
         }
 
-        _rb.velocity = new Vector2(_walkSpeed = walkDirectionVector.x, _rb.velocity.y);
+        _rb.velocity = new Vector2(_walkSpeed = walkDirectionVector.x * 2, _rb.velocity.y);
     }
 
     private void FlipDirection()
