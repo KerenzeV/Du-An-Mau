@@ -18,10 +18,14 @@ namespace HungController
         private Vector2 _frameVelocity;
         private bool _cachedQueryStartInColliders;
 
+
+        // wall slide
         private bool isWallDetected;
         private bool canWallSlide;
         private bool isWallSliding;
         private bool isFacingRight = true;
+
+
 
         #region Interface
 
@@ -45,6 +49,7 @@ namespace HungController
         {
             _time += Time.deltaTime;
             GatherInput();
+
         }
 
         
@@ -85,7 +90,7 @@ namespace HungController
         private void FixedUpdate()
         {
             CheckCollisions();
-
+            
             HandleJump();
             HandleDirection();
             HandleGravity();
@@ -101,11 +106,14 @@ namespace HungController
             }
             else
             {
-                
-                ApplyMovement();
-                isWallSliding = false;
+
+                    ApplyMovement();
+                    isWallSliding = false;
+
+
             }
         }
+        //test
 
         #region Collisions
         
@@ -164,6 +172,7 @@ namespace HungController
             }
             Physics2D.queriesStartInColliders = _cachedQueryStartInColliders;
         }
+
 
         #endregion
 

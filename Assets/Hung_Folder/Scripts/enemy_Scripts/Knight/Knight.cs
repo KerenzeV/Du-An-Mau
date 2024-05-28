@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirection))]
 public class Knight : MonoBehaviour
 {
-    public float _walkSpeed = 50f;
+    private float _walkSpeed = 0.5f;
 
     Rigidbody2D _rb;
 
@@ -51,7 +51,7 @@ public class Knight : MonoBehaviour
     private void FixedUpdate()
     {
 
-        if( touchingDirection.IsGrounded && touchingDirection.IsOnWall )
+        if(touchingDirection.IsGrounded && touchingDirection.IsOnWall )
         {
             FlipDirection();
         }

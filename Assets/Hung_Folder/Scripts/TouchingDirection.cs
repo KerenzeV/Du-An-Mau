@@ -45,7 +45,7 @@ internal class TouchingDirection : MonoBehaviour
         get { return _isOnCeiling; }
         private set
         {
-            _isGrounded = value;
+            _isOnCeiling = value;
             animator.SetBool(AnimationStrings.isOnCeiling, value);
         }
     }
@@ -62,7 +62,7 @@ internal class TouchingDirection : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits, groundDistance) > 0;
+        IsGrounded = touchingCol.Cast(Vector3.down, castFilter, groundHits, groundDistance) > 0;
         if(IsGrounded == true)
         {
             Debug.Log("is grounded");
