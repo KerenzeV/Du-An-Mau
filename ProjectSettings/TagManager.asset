@@ -4,16 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ground
+  - Floor
+  - Ladder
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PlayerLayer
+  - 
   - Water
   - UI
+  - Ground
   - 
-  - wall
   - 
   - 
   - 
