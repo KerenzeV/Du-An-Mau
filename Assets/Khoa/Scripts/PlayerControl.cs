@@ -14,12 +14,14 @@ public class test : MonoBehaviour
     bool isTouchingGround;
     bool isOnLadder; // Biến để xác định xem nhân vật có đang ở trên cầu thang không
     float verticalInput;
+    Animator anim;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -36,6 +38,8 @@ public class test : MonoBehaviour
         // Di chuyển ngang
         float horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.right * horizontalInput * speed * Time.deltaTime);
+        bool Playerhasmove = Mathf.Abs(horizontalInput) > Mathf.Epsilon;
+        anim.SetBool("IsRunning",Playerhasmove);
 
         // Xoay hình ảnh khi di chuyển sang trái hoặc phải
         if (horizontalInput < 0)
@@ -73,6 +77,9 @@ public class test : MonoBehaviour
             // Không cho nhân vật nhảy khi đang trên cầu thang
             if (Input.GetKeyDown(KeyCode.Space))
                 rb.velocity = new Vector2(rb.velocity.x, 0f);
+
+            bool Playerhasclimb = Mathf.Abs(rb.velocity.y) > Mathf.Epsilon;
+            anim.SetBool("IsClimbing",Playerhasclimb);
         }
     }
 
@@ -82,7 +89,6 @@ public class test : MonoBehaviour
         if (other.CompareTag("Ladder"))
         {
             isOnLadder = true;
-            rb.gravityScale = 0; // Tắt trọng lực để nhân vật không rơi khi trên cầu thang
         }
     }
 
@@ -92,7 +98,6 @@ public class test : MonoBehaviour
         if (other.CompareTag("Ladder"))
         {
             isOnLadder = false;
-            rb.gravityScale = 1; // Bật lại trọng lực khi nhân vật rời khỏi cầu thang
         }
     }
 
