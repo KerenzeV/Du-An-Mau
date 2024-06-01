@@ -13,6 +13,9 @@ public class PlayerMovement : MonoBehaviour
     Animator _animator;
     CapsuleCollider2D _capsuleCollider;
     private float GravityScaleAtStart;
+    private bool isAlive;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +23,7 @@ public class PlayerMovement : MonoBehaviour
         _animator = GetComponent<Animator>();
         _capsuleCollider = GetComponent<CapsuleCollider2D>();
         GravityScaleAtStart = _rigidbody2d.gravityScale;
+        isAlive = true;
     }
 
     // Update is called once per frame
@@ -28,22 +32,50 @@ public class PlayerMovement : MonoBehaviour
         Run();
         FlipSprite();
         ClimbLadder();
+        Die();
     }
 
     void OnMove(InputValue value)
     {
+        if(!isAlive) return;
         MoveInput = value.Get<Vector2>();
         Debug.Log("Move input"+MoveInput);
     }
 
     void OnJump(InputValue value)
     {
+        if (!isAlive) return;
         var istouchingGround = _capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Ground"));
         if (!istouchingGround) return;
         if(value.isPressed)
         {
             Debug.Log("Jump");
             _rigidbody2d.velocity += new Vector2(0, jumpspeed);
+        }
+    }
+
+    void OnFire(InputValue value)
+    {
+        if (!isAlive) return;
+
+        if (value.isPressed)
+        {
+            Debug.Log("Fire");
+            //tao vien dan tai vi tri cua sung
+            var oneBullet = Instantiate(bullet, gun.position, transform.rotation);
+            //cung cap velocity cho vien dan
+            if (transform.lossyScale.x < 0)
+            {
+                oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
+
+            }
+            else
+            {
+                oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(15, 0);
+            }
+            // huy vien dan sau 2 giay
+            Destroy(oneBullet, 2);
+            
         }
     }
 
@@ -83,5 +115,17 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool("IsClimbing",playerhasVeritcalSpeed);
 
         _rigidbody2d.gravityScale = 0;
+    }
+
+    void Die()
+    {
+        var isTouchingEnemy = _capsuleCollider.IsTouchingLayers(LayerMask.GetMask("Enemy","Trap"));
+
+        if (isTouchingEnemy)
+        {
+            isAlive = false;
+            _animator.SetTrigger("Dying");
+            _rigidbody2d.velocity = new Vector2(0, 0);
+        }
     }
 }

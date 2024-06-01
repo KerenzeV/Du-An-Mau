@@ -4,35 +4,30 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    [SerializeField] float start, end, speed;
-    Rigidbody2D rig;
-    int isRight = 1;
+    [SerializeField] float moveSpeed = 5f;
+    private Rigidbody2D _rigidbody2D;
     // Start is called before the first frame update
     void Start()
     {
-        rig = GetComponent<Rigidbody2D>();
+       _rigidbody2D = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Run();
-        Flip();
+        _rigidbody2D.velocity = new Vector2(moveSpeed, 0);
     }
 
-    void Run()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        var x_enemy = transform.position.x;
-        if (x_enemy < start)
-            isRight = 1;
-        if (x_enemy > end)
-            isRight = -1;
-        transform.Translate(new Vector3(isRight * speed * Time.deltaTime, 0, 0));
+        moveSpeed *= -1;
+        // xoay huong
+        transform.localScale = new Vector2(-Mathf.Sign(_rigidbody2D.velocity.x)*4,4f);
     }
 
 
-    void Flip()
-    {
-        transform.localScale = new Vector2(isRight * 4, 4f);
-    }
+
+
+
 }

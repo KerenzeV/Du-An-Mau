@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Ladder
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -17,10 +17,10 @@ TagManager:
   - Player
   - BackGround
   - Enemy
-  - 
-  - 
-  - 
-  - 
+  - Trap
+  - Bullet
+  - Interactable
+  - Coins
   - 
   - 
   - 
@@ -51,12 +51,21 @@ TagManager:
   - name: Ladder
     uniqueID: 2190129391
     locked: 0
-  - name: Player
-    uniqueID: 111130501
-    locked: 0
   - name: enemy
     uniqueID: 2255499043
     locked: 0
   - name: spike
     uniqueID: 2594113149
+    locked: 0
+  - name: Bullet
+    uniqueID: 3342468713
+    locked: 0
+  - name: Coins
+    uniqueID: 3958882069
+    locked: 0
+  - name: Interactable
+    uniqueID: 678575165
+    locked: 0
+  - name: Player
+    uniqueID: 111130501
     locked: 0
