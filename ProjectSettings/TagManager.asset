@@ -3,10 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
+
   tags:
   - Ladder
   - Slime
   - Floor
+
+
+
   layers:
   - Default
   - TransparentFX
@@ -14,6 +18,7 @@ TagManager:
   - 
   - Water
   - UI
+
   - Ladders
   - Ground
   - Player
@@ -23,6 +28,7 @@ TagManager:
   - Bullet
   - InteractPoint
   - Coin
+
   - 
   - 
   - 
@@ -44,6 +50,7 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+
   - name: Background
     uniqueID: 2205763761
     locked: 0
@@ -76,4 +83,6 @@ TagManager:
     locked: 0
   - name: Coin
     uniqueID: 1726555959
+
+
     locked: 0
