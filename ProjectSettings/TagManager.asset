@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ladder
+  - Slime
+  - Floor
   layers:
   - Default
   - TransparentFX
@@ -12,15 +14,15 @@ TagManager:
   - 
   - Water
   - UI
-  - Ladder
+  - Ladders
   - Ground
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Background
+  - Slime
+  - Trap
+  - Bullet
+  - InteractPoint
+  - Coin
   - 
   - 
   - 
@@ -39,14 +41,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
   - name: Background
     uniqueID: 2205763761
     locked: 0
   - name: Ground
     uniqueID: 3404966603
-    locked: 0
-  - name: Ladders
-    uniqueID: 313411675
     locked: 0
   - name: Traps
     uniqueID: 3378411423
@@ -54,6 +56,24 @@ TagManager:
   - name: Water
     uniqueID: 3734251373
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Ladders
+    uniqueID: 313411675
+    locked: 0
+  - name: Slime
+    uniqueID: 492895619
+    locked: 0
+  - name: Trap
+    uniqueID: 2518214425
+    locked: 0
+  - name: Bullet
+    uniqueID: 2582513807
+    locked: 0
+  - name: InteractPoint
+    uniqueID: 2963380041
+    locked: 0
+  - name: Player
+    uniqueID: 2348465187
+    locked: 0
+  - name: Coin
+    uniqueID: 1726555959
     locked: 0
