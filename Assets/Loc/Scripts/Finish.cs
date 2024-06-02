@@ -26,7 +26,7 @@ public class Finish : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             informationCanvas.SetActive(false);
-            var score = FindObjectOfType<GameController>(gameObject).GetScore();
+            var score = FindObjectOfType<GameController>().GetScore();
             // Save Info Player
 
             var gameData = new GameData()
