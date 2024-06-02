@@ -144,6 +144,7 @@ public class PlayerMovement : MonoBehaviour
         if (transform.localScale.x < 0)
         {
             oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
+            oneBullet.transform.eulerAngles = new Vector2(0, 180);
         }
         else
         {
