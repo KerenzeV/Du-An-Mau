@@ -11,7 +11,7 @@ namespace Assets.Loc.Scripts
     using UnityEngine;
     internal class StorageHelper
     {
-        private readonly string filename = "game_data.txt";
+        private readonly string filename = @"Assets\Loc\game_data.txt";
         public GameDataPlayed played;
 
         public void LoadData()
