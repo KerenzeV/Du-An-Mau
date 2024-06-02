@@ -61,13 +61,14 @@ public class PlayerMovement : MonoBehaviour
         if (value.isPressed)
         {
             Debug.Log("Fire");
+            _animator.SetTrigger("Shoot");
             //tao vien dan tai vi tri cua sung
             var oneBullet = Instantiate(bullet, gun.position, transform.rotation);
             //cung cap velocity cho vien dan
             if (transform.lossyScale.x < 0)
             {
                 oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
-
+                oneBullet.transform.eulerAngles = new Vector2(0, 180);
             }
             else
             {
@@ -75,6 +76,8 @@ public class PlayerMovement : MonoBehaviour
             }
             // huy vien dan sau 2 giay
             Destroy(oneBullet, 2);
+
+
             
         }
     }
@@ -126,6 +129,8 @@ public class PlayerMovement : MonoBehaviour
             isAlive = false;
             _animator.SetTrigger("Dying");
             _rigidbody2d.velocity = new Vector2(0, 0);
+            //reset mang
+            FindObjectOfType<UIbyKhoa>().PlayerDeath();
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Coins : MonoBehaviour
 {
-
+    [SerializeField] int coinValue = 10;
     [SerializeField] AudioClip CoinsPickSFX;
    
 
@@ -13,6 +13,8 @@ public class Coins : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            //tang diem
+            FindObjectOfType<UIbyKhoa>().AddScore((int)coinValue);
             //play sound
             AudioSource.PlayClipAtPoint(CoinsPickSFX, Camera.main.transform.position);
             //destroy
