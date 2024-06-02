@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
-    
+
     private Rigidbody2D _rigibody2D;
     Vector2 moveInput;
     private Animator _animator;
@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        if (!isAlive) 
+        if (!isAlive)
         {
             return;
         }
@@ -94,11 +94,11 @@ public class PlayerMovement : MonoBehaviour
     void Climbladder()
     {
         var isTouchingLadder = _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders"));
-        if (!isTouchingLadder) 
+        if (!isTouchingLadder)
         {
             _rigibody2D.gravityScale = gravityScaleAtStart;
             _animator.SetBool("isClimbing", false);
-            return; 
+            return;
         }
 
         var climbVelocity = new Vector2(_rigibody2D.velocity.x, y: moveInput.y * climbSpeed);
@@ -114,12 +114,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
-        var isTouchingEnemy = _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Slime","Trap"));
+        var isTouchingEnemy = _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Slime", "Trap"));
         if (isTouchingEnemy)
         {
             isAlive = false;
             _animator.SetTrigger("Dying");
-            _rigibody2D.velocity = new Vector2(0,0);
+            _rigibody2D.velocity = new Vector2(0, 0);
 
             // xu li die
             FindObjectOfType<GameController>().ProcessPlayerDeath();
@@ -128,15 +128,18 @@ public class PlayerMovement : MonoBehaviour
 
     void OnFire(InputValue value)
     {
-        if(!isAlive)
+        if (!isAlive)
         {
             return;
         }
         Debug.Log(">>>>> Fire");
-        
+
+        // Ani Shoot
+        _animator.SetTrigger("Attack");
+
         // Create bullet 
         var oneBullet = Instantiate(bullet, gun.position, transform.rotation);
-        
+
         // Flip
         if (transform.localScale.x < 0)
         {
@@ -144,10 +147,13 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            oneBullet.GetComponent <Rigidbody2D>().velocity = new Vector2(15,0);
+            oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(15, 0);
         }
 
         // Destroy bullet after 2s
-        Destroy(oneBullet,2);
+        Destroy(oneBullet, 2);
+
+
     }
 }
+
