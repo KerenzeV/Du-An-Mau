@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-
     [SerializeField] int score = 0;
     [SerializeField] int live = 3;
 
@@ -14,45 +13,66 @@ public class GameController : MonoBehaviour
     [SerializeField] TextMeshProUGUI liveText;
     [SerializeField] GameObject gameOverPanel;
 
+    private static GameController instance;
+
     private void Awake()
     {
-        var numGameSessions = FindObjectsOfType<GameController>().Length;
-        if (numGameSessions > 1)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
 
-    // Start is called before the first frame update
     void Start()
     {
-        liveText.text = live.ToString();
-        scoreText.text = score.ToString();
+        UpdateUI();
     }
 
-    public void AddScore(int scoreToAdd) 
+    public void AddScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        scoreText.text = score.ToString();
+        UpdateUI();
     }
 
     private void DecreaseLive()
     {
         live--;
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
-        liveText.text = live.ToString();
+        UpdateUI();
+
+        if (live >= 0)
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
+        }
+        else
+        {
+            GameOverPanel();
+        }
+    }
+
+    public void ResetScore()
+    {
+        score = 0;
+        UpdateUI();
+    }
+
+    public void ResetLives()
+    {
+        live = 3;
+        UpdateUI();
     }
 
     public void ResetGame()
     {
+        ResetLives();
+        ResetScore();
         SceneManager.LoadScene(1);
-        Destroy(gameObject);
-
+        Time.timeScale = 1;
     }
 
     public void ProcessPlayerDeath()
@@ -64,7 +84,6 @@ public class GameController : MonoBehaviour
         else
         {
             GameOverPanel();
-            //ResetGame();
         }
     }
 
@@ -75,7 +94,32 @@ public class GameController : MonoBehaviour
 
     public void GameOverPanel()
     {
-        gameOverPanel.SetActive(true);
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(true);
+        }
         Time.timeScale = 0;
     }
+
+    public void HideGameOverPanel()
+    {
+        if (gameOverPanel != null)
+        {
+            gameOverPanel.SetActive(false);
+        }
+    }
+
+    private void UpdateUI()
+    {
+        if (liveText != null)
+        {
+            liveText.text = live.ToString();
+        }
+
+        if (scoreText != null)
+        {
+            scoreText.text = score.ToString();
+        }
+    }
 }
+
