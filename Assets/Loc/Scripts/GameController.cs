@@ -12,6 +12,7 @@ public class GameController : MonoBehaviour
 
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI liveText;
+    [SerializeField] GameObject gameOverPanel;
 
     private void Awake()
     {
@@ -47,9 +48,9 @@ public class GameController : MonoBehaviour
         liveText.text = live.ToString();
     }
 
-    private void ResetGame()
+    public void ResetGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
         Destroy(gameObject);
 
     }
@@ -62,12 +63,19 @@ public class GameController : MonoBehaviour
         }
         else
         {
-            ResetGame();
+            GameOverPanel();
+            //ResetGame();
         }
     }
 
     public int GetScore()
     {
         return score;
+    }
+
+    public void GameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+        Time.timeScale = 0;
     }
 }
