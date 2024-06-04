@@ -33,7 +33,10 @@ public class PauseMenu : MonoBehaviour
         GameController.Instance.ResetScore();
         GameController.Instance.ResetLives();
         GameController.Instance.HideGameOverPanel();
-        SceneManager.LoadScene("Scene 1");
+        
+        //Load scene hien tai
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
         Time.timeScale = 1;
     }
 }

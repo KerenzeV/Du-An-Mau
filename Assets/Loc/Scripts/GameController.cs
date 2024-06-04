@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
         live--;
         UpdateUI();
 
-        if (live >= 0)
+        if (live > 0)
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
             SceneManager.LoadScene(currentSceneIndex);
@@ -69,7 +69,9 @@ public class GameController : MonoBehaviour
     {
         ResetLives();
         ResetScore();
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentSceneIndex);
         Time.timeScale = 1;
     }
 
