@@ -6,6 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Khoa/Scenes/Scene2.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
@@ -13,3 +14,15 @@ EditorBuildSettings:
     guid: 31fb382c4c20737418d49d4d6e27cfa1
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: be87e52476e2bee45a79108ee34a412f, type: 2}
+=======
+    path: Assets/Loc/Scene/Main Menu.unity
+    guid: 5740e573337ced242894ebb346e2bf86
+  - enabled: 1
+    path: Assets/Loc/Scene/Scene 1.unity
+    guid: 31fb382c4c20737418d49d4d6e27cfa1
+  - enabled: 1
+    path: Assets/Scenes/Scene2.unity
+    guid: dade1d31566c16642b7d5c3422571521
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 43fc3893e7fcc5643ad55c4a0e72d9da, type: 2}
+>>>>>>> origin/main_version1

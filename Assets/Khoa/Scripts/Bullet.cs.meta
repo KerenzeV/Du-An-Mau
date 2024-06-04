@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Khoa/Scripts/Bullet.cs.meta
 guid: 38a5a7656ce035641bd5d7243042d72f
+========
+guid: f6fcf4a9e49a4a340981ceeab0055ff5
+>>>>>>>> origin/main_version1:Assets/Loc/Scripts/Bullet.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
