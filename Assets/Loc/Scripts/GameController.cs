@@ -1,34 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance { get; private set; }
+
     [SerializeField] int score = 0;
     [SerializeField] int live = 3;
-
     [SerializeField] TextMeshProUGUI scoreText;
     [SerializeField] TextMeshProUGUI liveText;
     [SerializeField] GameObject gameOverPanel;
 
-    private static GameController instance;
-
     private void Awake()
     {
-        if (instance != null && instance != this)
+       
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
 
-    void Start()
+    private void Start()
     {
         UpdateUI();
     }

@@ -88,9 +88,8 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetTrigger("Dying");
             _rigibody2D.velocity = Vector2.zero;
 
-            GameController gameController = FindObjectOfType<GameController>();
-            gameController.ProcessPlayerDeath();
-            gameController.ResetScore();
+            GameController.Instance.ProcessPlayerDeath();
+            GameController.Instance.ResetScore();
         }
     }
 

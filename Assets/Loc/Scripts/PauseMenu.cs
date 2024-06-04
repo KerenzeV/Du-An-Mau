@@ -15,8 +15,8 @@ public class PauseMenu : MonoBehaviour
     public void Home()
     {
         pauseMenu.SetActive(false);
-        FindObjectOfType<GameController>().ResetScore();
-        FindObjectOfType<GameController>().ResetLives ();
+        GameController.Instance.ResetScore();
+        GameController.Instance.ResetLives();
         SceneManager.LoadScene("Main Menu");
         Time.timeScale = 1;
     }
@@ -30,10 +30,9 @@ public class PauseMenu : MonoBehaviour
     public void Restart()
     {
         pauseMenu.SetActive(false);
-        var gameController = FindObjectOfType<GameController>();
-        gameController.ResetScore();
-        gameController.ResetLives();
-        gameController.HideGameOverPanel();
+        GameController.Instance.ResetScore();
+        GameController.Instance.ResetLives();
+        GameController.Instance.HideGameOverPanel();
         SceneManager.LoadScene("Scene 1");
         Time.timeScale = 1;
     }
