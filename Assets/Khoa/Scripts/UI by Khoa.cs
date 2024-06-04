@@ -8,64 +8,81 @@ using UnityEngine.SceneManagement;
 
 public class UIbyKhoa : MonoBehaviour
 {
-
     [SerializeField] int score = 0;
     [SerializeField] int live = 3;
     [SerializeField] TextMeshProUGUI ScoreText;
     [SerializeField] TextMeshProUGUI LiveText;
+    [SerializeField] GameObject GameOverPanel;
 
-
+    private static UIbyKhoa instance;
     private void Awake()
     {
-        int numGameSession = FindObjectsOfType<UIbyKhoa>().Length;
-
-        if (numGameSession > 1)
+        if (instance != null && instance != this)
         {
             Destroy(gameObject);
         }
         else
         {
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
     }
     // Start is called before the first frame update
     void Start()
     {
-        LiveText.text = live.ToString();
-        ScoreText.text = score.ToString();
+        UpdateUI();
     }
-
   
     //tang diem
     public void AddScore(int scoreToadd)
     {
         score += scoreToadd;
-        ScoreText.text += score.ToString();
+        UpdateUI();
     }
 
 
     private void DescreaseLive()
-    {
+    {     
         live--;
-        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        SceneManager.LoadScene(currentSceneIndex);
-        LiveText.text = live.ToString();
+        UpdateUI();
+ 
+        if (live >= 0)
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
+        }
+        else
+        {
+            ShowOverPanel();
+        }
     }
 
-    private void Resetgame()
+    public void ResetScore()
     {
-        SceneManager.LoadScene(1);
-        Destroy(gameObject);
+        score = 0;
+        UpdateUI();
+    }
+
+    public void ResetLives()
+    {
+        live = 3;
+        UpdateUI();
+    }
+
+    public void Resetgame()
+    {
+        ResetLives();
+        ResetScore();
+        SceneManager.LoadScene(0);
+        Time.timeScale = 1;
     }
 
     public void PlayerDeath()
     {
-        if (live > 1)
+        DescreaseLive();
+        if (live <= 0)
         {
-           DescreaseLive();
-        }else
-        {
-            Resetgame();
+            ShowOverPanel();
         }
     }
 
@@ -73,4 +90,35 @@ public class UIbyKhoa : MonoBehaviour
     {
         return score;
     }
+
+    public void ShowOverPanel()
+    {
+        if (GameOverPanel != null)
+        {
+            GameOverPanel.SetActive(true);
+        }
+        Time.timeScale = 0;
+    }
+
+    public void HideGameOverPanel()
+    {
+        if (GameOverPanel != null)
+        {
+            GameOverPanel.SetActive(false);
+        }
+    }
+
+    private void UpdateUI()
+    {
+        if (LiveText != null)
+        {
+            LiveText.text = live.ToString();
+        }
+
+        if (ScoreText != null)
+        {
+            ScoreText.text = score.ToString();
+        }
+    }
+
 }
