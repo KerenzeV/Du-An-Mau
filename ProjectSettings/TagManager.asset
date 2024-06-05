@@ -7,6 +7,7 @@ TagManager:
   - Ladder
   - Slime
   - Floor
+  - Bullet
   layers:
   - Default
   - TransparentFX
