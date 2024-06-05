@@ -78,3 +78,6 @@ TagManager:
   - name: Coin
     uniqueID: 1726555959
     locked: 0
+  - name: Finish
+    uniqueID: 738717537
+    locked: 0
