@@ -4,13 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< HEAD
-  - Enemy
-=======
   - Ladder
   - Slime
   - Floor
->>>>>>> origin/main_version1
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -20,16 +17,6 @@ TagManager:
   - UI
   - Ladders
   - Ground
-<<<<<<< HEAD
-  - Ladder
-  - Player
-  - BackGround
-  - Enemy
-  - Trap
-  - Bullet
-  - Interactable
-  - Coins
-=======
   - Player
   - Background
   - Slime
@@ -37,7 +24,6 @@ TagManager:
   - Bullet
   - InteractPoint
   - Coin
->>>>>>> origin/main_version1
   - 
   - 
   - 
@@ -59,34 +45,6 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-<<<<<<< HEAD
-  - name: BackGround
-    uniqueID: 1080733855
-    locked: 0
-  - name: Ground
-    uniqueID: 1182917257
-    locked: 0
-  - name: Ladder
-    uniqueID: 2190129391
-    locked: 0
-  - name: enemy
-    uniqueID: 2255499043
-    locked: 0
-  - name: spike
-    uniqueID: 2594113149
-    locked: 0
-  - name: Bullet
-    uniqueID: 3342468713
-    locked: 0
-  - name: Coins
-    uniqueID: 3958882069
-    locked: 0
-  - name: Interactable
-    uniqueID: 678575165
-    locked: 0
-  - name: Player
-    uniqueID: 111130501
-=======
   - name: Background
     uniqueID: 2205763761
     locked: 0
@@ -119,5 +77,7 @@ TagManager:
     locked: 0
   - name: Coin
     uniqueID: 1726555959
->>>>>>> origin/main_version1
+    locked: 0
+  - name: Finish
+    uniqueID: 738717537
     locked: 0

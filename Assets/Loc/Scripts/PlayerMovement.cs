@@ -10,16 +10,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5f;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
-    
-    private Rigidbody2D _rigibody2D;
-    Vector2 moveInput;
-    private Animator _animator;
-    CapsuleCollider2D _capsuleCollider2D;
-    private float gravityScaleAtStart;
 
+    private Rigidbody2D _rigibody2D;
+    private Vector2 moveInput;
+    private Animator _animator;
+    private CapsuleCollider2D _capsuleCollider2D;
+    private float gravityScaleAtStart;
     private bool isAlive;
 
-    // Start is called before the first frame update
     void Start()
     {
         _rigibody2D = GetComponent<Rigidbody2D>();
@@ -29,125 +27,91 @@ public class PlayerMovement : MonoBehaviour
         isAlive = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (!isAlive) return;
+
         Run();
         FlipSprite();
-        Climbladder();
-        Die();
+        ClimbLadder();
+        CheckForDeath();
     }
 
     void OnMove(InputValue value)
     {
-        if (!isAlive) 
-        {
-            return;
-        }
-        moveInput = value.Get<Vector2>();
-        Debug.Log(message: ">>>>>> Move Input: " + moveInput);
+        if (isAlive) moveInput = value.Get<Vector2>();
     }
 
     void OnJump(InputValue value)
     {
-        if (!isAlive)
+        if (isAlive && value.isPressed && _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground")))
         {
-            return;
-        }
-        //Kiem tra nhay 2 lan
-        var isTouchingGround = _capsuleCollider2D
-            .IsTouchingLayers(LayerMask.GetMask("Ground"));
-        if (!isTouchingGround) return;
-
-        //Neu nguoi choi nhan nut nhay
-        if (value.isPressed)
-        {
-            Debug.Log(message: ">>>>> Jump");
-            _rigibody2D.velocity += new Vector2(x: 0, y: jumpSpeed);
+            _rigibody2D.velocity += new Vector2(0, jumpSpeed);
         }
     }
 
-    // Dieu khien chuyen dong nhan vat
     private void Run()
     {
-        var moveVelocity = new Vector2(moveInput.x * moveSpeed, _rigibody2D.velocity.y);
+        Vector2 moveVelocity = new Vector2(moveInput.x * moveSpeed, _rigibody2D.velocity.y);
         _rigibody2D.velocity = moveVelocity;
-        bool playerHasHorizontalSpeed = Mathf.Abs(moveInput.x) > Mathf.Epsilon;
-        _animator.SetBool(name: "isRunning", playerHasHorizontalSpeed);
+        _animator.SetBool("isRunning", Mathf.Abs(moveInput.x) > Mathf.Epsilon);
     }
 
-
-    // Flip
-    // Abs: gia tri tuyet doi
-    // Sign: Dau co gia tri
-    // Epsilon: gia tri nho nhat co the so sanh
-    void FlipSprite()
+    private void FlipSprite()
     {
-        bool playerHasHorizontalSpeed = Mathf.Abs(_rigibody2D.velocity.x) > Mathf.Epsilon;
-        if (playerHasHorizontalSpeed)
+        if (Mathf.Abs(_rigibody2D.velocity.x) > Mathf.Epsilon)
         {
-            transform.localScale = new Vector2(x: Mathf.Sign(_rigibody2D.velocity.x), y: 1f);
+            transform.localScale = new Vector2(Mathf.Sign(_rigibody2D.velocity.x), 1f);
         }
     }
 
-    // Climb
-    void Climbladder()
+    private void ClimbLadder()
     {
-        var isTouchingLadder = _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders"));
-        if (!isTouchingLadder) 
+        if (!_capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Ladders")))
         {
             _rigibody2D.gravityScale = gravityScaleAtStart;
             _animator.SetBool("isClimbing", false);
-            return; 
+            return;
         }
 
-        var climbVelocity = new Vector2(_rigibody2D.velocity.x, y: moveInput.y * climbSpeed);
+        Vector2 climbVelocity = new Vector2(_rigibody2D.velocity.x, moveInput.y * climbSpeed);
         _rigibody2D.velocity = climbVelocity;
-
-        // Animation leo thang
-        var playerHasVerticalSpeed = Mathf.Abs(moveInput.y) > Mathf.Epsilon;
-        _animator.SetBool("isClimbing", playerHasVerticalSpeed);
-
-        //Gravity off Climb
+        _animator.SetBool("isClimbing", Mathf.Abs(moveInput.y) > Mathf.Epsilon);
         _rigibody2D.gravityScale = 0;
     }
 
-    void Die()
+    private void CheckForDeath()
     {
-        var isTouchingEnemy = _capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Slime","Trap"));
-        if (isTouchingEnemy)
+        if (_capsuleCollider2D.IsTouchingLayers(LayerMask.GetMask("Slime", "Trap")))
         {
             isAlive = false;
             _animator.SetTrigger("Dying");
-            _rigibody2D.velocity = new Vector2(0,0);
+            _rigibody2D.velocity = Vector2.zero;
 
-            // xu li die
-            FindObjectOfType<GameController>().ProcessPlayerDeath();
+            GameController.Instance.ProcessPlayerDeath();
+            GameController.Instance.ResetScore();
         }
     }
 
     void OnFire(InputValue value)
     {
-        if(!isAlive)
-        {
-            return;
-        }
-        Debug.Log(">>>>> Fire");
-        
-        // Create bullet 
-        var oneBullet = Instantiate(bullet, gun.position, transform.rotation);
-        
-        // Flip
+        if (!isAlive) return;
+
+        _animator.SetTrigger("Attack");
+
+        GameObject oneBullet = Instantiate(bullet, gun.position, transform.rotation);
+        Rigidbody2D bulletRb = oneBullet.GetComponent<Rigidbody2D>();
+
         if (transform.localScale.x < 0)
         {
-            oneBullet.GetComponent<Rigidbody2D>().velocity = new Vector2(-15, 0);
+            bulletRb.velocity = new Vector2(-15, 0);
+            oneBullet.transform.eulerAngles = new Vector2(0, 180);
         }
         else
         {
-            oneBullet.GetComponent <Rigidbody2D>().velocity = new Vector2(15,0);
+            bulletRb.velocity = new Vector2(15, 0);
         }
 
-        // Destroy bullet after 2s
-        Destroy(oneBullet,2);
+        Destroy(oneBullet, 2f);
     }
 }
